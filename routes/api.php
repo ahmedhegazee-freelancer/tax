@@ -77,14 +77,15 @@ Route::post('upload-files', function (Request $request) {
     DB::table('invoices')->truncate();
     DB::table('invoice_items')->truncate();
     if ($request->file('tickets')) {
-        Excel::import(new InvoicesImport, $request->file('tickets'));
+        Excel::queueImport(new InvoicesImport, $request->file('tickets'))->allOnQueue('invoices');
     }
     if ($request->file('items')) {
-        Excel::import(new InvoiceItemsImport, $request->file('items'));
+        Excel::queueImport(new InvoiceItemsImport, $request->file('items'))->allOnQueue('invoices');
     }
 });
 
 Route::post('send-invoice', function (Request $request) {
+    abort_if(Invoice::count() == 0, 400, 'No Invoices Found');
     $idUrl = "";
     $apiUrl = "";
     if ($request->get('pre')) {
