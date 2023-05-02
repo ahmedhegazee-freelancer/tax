@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Jobs\ReadChunk;
 
-class InvoicesImport implements ToModel, WithBatchInserts, WithChunkReading
+class InvoicesImport implements ToModel, WithBatchInserts, WithChunkReading, ShouldQueue
 {
     /**
      * @param array $row

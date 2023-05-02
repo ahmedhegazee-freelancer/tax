@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class InvoiceItemsImport implements ToModel, WithBatchInserts, WithChunkReading
+class InvoiceItemsImport implements ToModel, WithBatchInserts, WithChunkReading, ShouldQueue
 {
     /**
      * @param array $row
