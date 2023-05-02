@@ -110,13 +110,19 @@ Route::post('send-invoice', function (Request $request) {
         abort(400, 'Invalid Credentials');
     }
 
-    // dd(json_encode([
-    //     'receipts' => InvoiceService::make()->formatInvoices([3]),
-    // ], JSON_PRESERVE_ZERO_FRACTION));
+    $invoices = Invoice::select(['id'])
+        ->whereDate('closing_date', $request->get('date'))
+        ->get();
+    if ($invoices->count() == 0)
+        abort(400, 'No Invoices Found');
     $json = Http::withHeaders([
         'Authorization' => 'Bearer ' . $token,
     ])->withBody(json_encode([
-        'receipts' => InvoiceService::make()->formatInvoices(Invoice::select(['id'])->get()->pluck('id')->toArray()),
+        'receipts' => InvoiceService::make()
+            ->formatInvoices(
+                $invoices->pluck('id')
+                    ->toArray()
+            ),
         // 'receipts' => InvoiceService::make()->formatInvoices([4]),
     ], JSON_PRESERVE_ZERO_FRACTION), 'application/json')
         ->post($apiUrl);
