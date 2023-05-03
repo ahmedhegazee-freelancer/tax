@@ -41,13 +41,13 @@ class InvoiceFormatter
         return $this;
     }
 
-    public function format(Invoice $invoice, string $previous = "")
+    public function format(Invoice $invoice, string $deviceID = "")
     {
         return
             [
-                'header' => $this->formatHeader($invoice->closing_date, $invoice->ticket_id, $previous),
+                'header' => $this->formatHeader($invoice->closing_date, $invoice->ticket_id, ""),
                 'documentType' => $this->formatDocument(),
-                'seller' => $this->formatSeller($this->businessSettings['deviceSerialNumber']),
+                'seller' => $this->formatSeller($deviceID),
                 'buyer' => [
                     'type' => 'P'
                 ],

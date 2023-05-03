@@ -123,7 +123,8 @@ Route::post('send-invoice', function (Request $request) {
         'receipts' => InvoiceService::make()
             ->formatInvoices(
                 $invoices->pluck('id')
-                    ->toArray()
+                    ->toArray(),
+                $request->get('posserial')
             ),
         // 'receipts' => InvoiceService::make()->formatInvoices([4]),
     ], JSON_PRESERVE_ZERO_FRACTION), 'application/json')

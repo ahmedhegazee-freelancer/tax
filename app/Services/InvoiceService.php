@@ -53,7 +53,7 @@ class InvoiceService
             })
             ->orderByDesc('closing_date')->limit(1)->first();
     }
-    public function formatInvoices(array $invoicesIds)
+    public function formatInvoices(array $invoicesIds, string $deviceID)
     {
         $service = InvoiceFormatter::make();
         $receipts = [];
@@ -75,7 +75,7 @@ class InvoiceService
             // } else {
             //     $previous = $invoices->get($key - 1)->ticket_id;
             // }
-            $formattedInvoice = $service->initialize()->format($invoice, $previous);
+            $formattedInvoice = $service->initialize()->format($invoice, $deviceID);
             // dump($formattedInvoice);
             // dump(InvoiceFormatter::flattenJson($formattedInvoice));
             $uuid = Str::upper(hash('sha256', InvoiceFormatter::flattenJson($formattedInvoice)));
