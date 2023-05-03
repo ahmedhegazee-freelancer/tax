@@ -39,10 +39,10 @@ class InvoiceItemFormatter
                 'quantity' => round($item->quantity, 1),
                 'unitPrice' =>
                 round($item->price, 1), //price
-                'netSale' => round($item->sub_total, 1),
-                'totalSale' =>  round($item->sub_total, 1), //subtotal
+                'netSale' => round($item->total, 1),
+                'totalSale' =>  round($item->total, 1), //subtotal
                 // 'total' => number_format($item->total, //total price
-                'total' => round($item->sub_total, 1), //total price
+                'total' => round($item->total, 1), //total price
 
             ];
         // if ($item->discount)

@@ -75,13 +75,14 @@ Route::post('upload-files', function (Request $request) {
         'items' => 'required|file',
     ]);
     DB::table('invoices')->truncate();
-    DB::table('invoice_items')->truncate();
+    // DB::table('invoice_items')->truncate();
     if ($request->file('tickets')) {
         Excel::queueImport(new InvoicesImport, $request->file('tickets'))->allOnQueue('invoices');
     }
-    if ($request->file('items')) {
-        Excel::queueImport(new InvoiceItemsImport, $request->file('items'))->allOnQueue('invoices');
-    }
+
+    // if ($request->file('items')) {
+    //     Excel::queueImport(new InvoiceItemsImport, $request->file('items'))->allOnQueue('invoices');
+    // }
 });
 
 Route::post('send-invoice', function (Request $request) {
@@ -113,6 +114,7 @@ Route::post('send-invoice', function (Request $request) {
     $invoices = Invoice::select(['id'])
         ->whereDate('closing_date', $request->get('date'))
         ->get();
+
     if ($invoices->count() == 0)
         abort(400, 'No Invoices Found');
     $json = Http::withHeaders([
