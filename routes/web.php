@@ -25,7 +25,7 @@ use Illuminate\Support\Str;
 
 Route::get('/', function () {
     $formattedDate = Carbon::createFromFormat('d/m/Y H:i', '29/04/2023 14:04')->format('Y-m-d H:i:s');
-    dd($formattedDate);
+    // dd($formattedDate);
     return view('welcome');
 });
 Route::get('invoices', function () {
